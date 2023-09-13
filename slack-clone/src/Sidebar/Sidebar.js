@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './Sidebar.css';
 import SidebarOption from './SidebarOption';
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
@@ -15,6 +15,12 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
 
 function Sidebar() {
+  // const [channels, setChannels] = useState([]);
+
+  useEffect(() => {
+    
+  }, [])
+
   return (
     <div className='sidebar'>
         <div className='sidebar_header'>
@@ -38,7 +44,7 @@ function Sidebar() {
         <hr />
         <SidebarOption Icon={ExpandMoreIcon} title='Channels' />
         <SidebarOption Icon={AddIcon} title='Add Channel' />
-        <SidebarOption title='hi' />
+        <SidebarOption title='Batch 29' />
         {/* connect to DB and add all channels */}
         <hr />
         <SidebarOption Icon={ExpandMoreIcon} title='Direct Messages' />
