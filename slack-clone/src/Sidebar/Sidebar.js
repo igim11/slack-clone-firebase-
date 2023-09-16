@@ -13,12 +13,22 @@ import FileCopyIcon from '@mui/icons-material/FileCopy';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import AddIcon from '@mui/icons-material/Add';
+import db from '../firebase';
+import { useStateValue } from '../StateProvider';
 
 function Sidebar() {
-  // const [channels, setChannels] = useState([]);
+  const [channels, setChannels] = useState([]);
+  const [{ user }] = useStateValue();
 
   useEffect(() => {
-    
+    db.collection('rooms').onSnapshot(snapshot => (
+      setChannels(
+        snapshot.docs.map(doc => ({
+          id: doc.id,
+          name: doc.data().name
+        }))
+        )
+    ))
   }, [])
 
   return (
@@ -28,7 +38,7 @@ function Sidebar() {
                 <h2>Avion School</h2>
                 <h3>
                     <FiberManualRecordIcon />
-                    Migi Castro
+                    {user?.displayName}
                 </h3>
             </div>
             <CreateIcon />
@@ -43,8 +53,10 @@ function Sidebar() {
         <SidebarOption Icon={ExpandLessIcon} title='Show less' />
         <hr />
         <SidebarOption Icon={ExpandMoreIcon} title='Channels' />
-        <SidebarOption Icon={AddIcon} title='Add Channel' />
-        <SidebarOption title='Batch 29' />
+        <SidebarOption Icon={AddIcon} addChannelOption title='Add Channel' />
+        {channels.map(channel => (
+          <SidebarOption title={channel.name} id={channel.id} key={channel.id} />
+        ))}
         {/* connect to DB and add all channels */}
         <hr />
         <SidebarOption Icon={ExpandMoreIcon} title='Direct Messages' />
